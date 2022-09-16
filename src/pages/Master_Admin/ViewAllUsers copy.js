@@ -84,10 +84,9 @@ export default function ViewAllUsers() {
                 // Managers.map((item, key) => {
                 //     listAllRecords.push(item);
                 // })
-                setloading(0);
             })
             .catch(error => console.log('error', error));
-        // GetallEmployee();
+        GetallEmployee();
     }
 
     const getRoles = (data) => {
@@ -98,62 +97,62 @@ export default function ViewAllUsers() {
         }
     }
 
-    // const GetallEmployee = () => {
-    //     setloading(1);
-    //     let Employees;
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", token);
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         headers: myHeaders,
-    //         redirect: 'follow'
-    //     };
-    //     fetch(APIUrl + `/employeedetails/company/${id}`, requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             console.log("Employee :");
-    //             console.log(result.data);
-    //             Employees = result.data;
-    //             Employees.map((item, key) => {
-    //                 setlistRecord(oldArray => [...oldArray, item]);
-    //                 // listAllRecords.push(item);
-    //                 if (Employees.length == (key + 1)) {
-    //                     setgetEmployee(true);
-    //                 }
-    //                 setloading(0);
-    //             })
-    //         })
-    //         .catch(error => console.log('error', error));
-    //     GetallFeedback();
-    // }
+    const GetallEmployee = () => {
+        setloading(1);
+        let Employees;
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", token);
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        fetch(APIUrl + `/employeedetails/company/${id}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log("Employee :");
+                console.log(result.data);
+                Employees = result.data;
+                Employees.map((item, key) => {
+                    setlistRecord(oldArray => [...oldArray, item]);
+                    // listAllRecords.push(item);
+                    if (Employees.length == (key + 1)) {
+                        setgetEmployee(true);
+                    }
+                    setloading(0);
+                })
+            })
+            .catch(error => console.log('error', error));
+        GetallFeedback();
+    }
 
-    // const GetallFeedback = () => {
-    //     setloading(1);
-    //     let Managers;
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Authorization", token);
-    //     var requestOptions = {
-    //         method: 'GET',
-    //         headers: myHeaders,
-    //         redirect: 'follow'
-    //     };
-    //     fetch(APIUrl + `/collect_feedback/company/${id}`, requestOptions)
-    //         .then(response => response.json())
-    //         .then(result => {
-    //             console.log("Survey Recipients");
-    //             console.log(result.data);
-    //             Managers = result.data;
-    //             Managers.map((item, key) => {
-    //                 setlistRecord(oldArray => [...oldArray, item]);
-    //                 // listAllRecords.push(item);
-    //                 if (Managers.length == (key + 1)) {
-    //                     setgetFeedback(true);
-    //                 }
-    //                 setloading(0);
-    //             })
-    //         })
-    //         .catch(error => console.log('error', error));
-    // }
+    const GetallFeedback = () => {
+        setloading(1);
+        let Managers;
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", token);
+        var requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        fetch(APIUrl + `/collect_feedback/company/${id}`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                console.log("Survey Recipients");
+                console.log(result.data);
+                Managers = result.data;
+                Managers.map((item, key) => {
+                    setlistRecord(oldArray => [...oldArray, item]);
+                    // listAllRecords.push(item);
+                    if (Managers.length == (key + 1)) {
+                        setgetFeedback(true);
+                    }
+                    setloading(0);
+                })
+            })
+            .catch(error => console.log('error', error));
+    }
 
     if (loading === 1) {
         return <div className="loader"> <CircularProgress /></div>

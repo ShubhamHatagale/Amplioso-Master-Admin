@@ -10,7 +10,6 @@ function MasterHeader() {
     useEffect(() => {
         getPackEmpCount()
         get_no_man()
-
     })
 
     const getPackEmpCount = () => {

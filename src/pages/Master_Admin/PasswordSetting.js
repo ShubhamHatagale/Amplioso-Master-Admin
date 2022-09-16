@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import * as Yup from "yup";
 import PasswordTextField from '../../components/passwordTextfield';
 import MaxWidthDialog from '../../components/AlertDialogBox';
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
+
 require("dotenv").config();
 var crypto = require("crypto");
 export default function PasswordSetting() {
@@ -133,14 +136,21 @@ export default function PasswordSetting() {
                                         />
                                         {/* <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" /> */}
 
-                                        <div ><span style={{ position: "relative", left: "500px", top: "-56px", fontSize: "14px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowPass(!showPass)}> show passsword</span></div>
-                                        <PasswordTextField
-                                            label="Confirm Password"
-                                            elementType="add"
-                                            name="confirmpassword"
-                                            type={showConfirmPass ? "text" : "password"}
-                                        />
-                                        <div ><span style={{ position: "relative", left: "500px", top: "-56px", fontSize: "14px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowConfirmPass(!showConfirmPass)}>show passsword</span></div>
+                                        {/* <div ><span style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowPass(!showPass)}> show passsword</span></div> */}
+                                        {/* <div><Visibility style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowPass(!showPass)} /></div> */}
+                                        <div>{showPass ? <Visibility style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowPass(!showPass)} /> : <VisibilityOff style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowPass(!showPass)} />}</div>
+
+                                        <div>
+                                            <PasswordTextField
+                                                label="Confirm Password"
+                                                elementType="add"
+                                                name="confirmpassword"
+                                                type={showConfirmPass ? "text" : "password"}
+                                            />
+                                            {/* <div ><span style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowConfirmPass(!showConfirmPass)}>show passsword</span></div> */}
+                                            <div>{showConfirmPass ? <Visibility style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowConfirmPass(!showConfirmPass)} /> : <VisibilityOff style={{ position: "relative", left: "500px", top: "-56px", fontSize: "16px", textTransform: "capitalize", textDecoration: "underline", cursor: "pointer" }} onClick={() => setshowConfirmPass(!showConfirmPass)} />}</div>
+
+                                        </div>
 
                                         <div className="input-field col m12 s12 pad-r center">
                                             <button
