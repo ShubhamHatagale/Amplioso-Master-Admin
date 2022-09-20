@@ -44,7 +44,7 @@ const MasterAdminRouting = () => {
                     data1={<MasterHeader />}
                 />
             </ProtectedRoute>
-            <ProtectedRoute exact path="/company_setting">
+            <ProtectedRoute exact path="/company_profile">
                 <MasterSidebar data={<CompanySetting />}
                     data1={<MasterHeader />}
                 />

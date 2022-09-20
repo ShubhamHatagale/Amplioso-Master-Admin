@@ -9,7 +9,7 @@ import { getAllEmployeeApi } from '../services/AllEmployee';
 import { getAllAvgEmployeeApi } from '../services/AllAvgEmployee';
 import { getAllFeedbackApi } from '../services/AllFeedback';
 import { getAllSectorApi } from '../services/allSector';
-import { getAllHeadquatersApi } from '../services/AllHeadquaters';
+import { getAllHeadquatersApi }  from '../services/AllHeadquaters';
 import { getAllPackagesApi } from '../services/AllPackages'
 import getYear from "date-fns/getYear";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -330,7 +330,7 @@ export default function CompanySetting() {
         <div>
             <div className="section inner-content">
                 <div className="section-title">
-                    <h1>Company settings</h1>
+                    <h1>Company Profile</h1>
                     {/* <div className="nav-wrapper inner-breadcrumb">
                         <div className="col s12 pad-l-0">
                             <a href="#!">DashBoard </a>
@@ -418,7 +418,7 @@ export default function CompanySetting() {
                                                 {formik.errors.hedquarters ? <div className='error'>{formik.errors.hedquarters}</div> : null}
                                             </div> */}
                                             <div className="col m6 s12 padtb">
-                                                <label className="label_active">Company Headquaters</label>
+                                                <label className="label_active">Company Headquarters</label>
                                                 <CustomSelect
                                                     search={false}
                                                     onChange={value => formik.setFieldValue('comapany_headquaters', value)}

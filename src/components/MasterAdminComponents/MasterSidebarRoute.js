@@ -56,13 +56,13 @@ export default function MasterSidebarRoute() {
                     <ListItemText primary="Password Settings" />
                 </ListItem>
             </div>
-            <div onClick={() => { history.push("/company_setting") }}>
+            <div onClick={() => { history.push("/company_profile") }}>
                 <ListItem button>
                     <ListItemIcon>
                         <i className="material-icons">domain</i>
                         {/* <Domain /> */}
                     </ListItemIcon>
-                    <ListItemText primary="Company Settings" />
+                    <ListItemText primary="Company Profile" />
                 </ListItem>
             </div>
             <div onClick={() => { history.push("/assign_manager") }}>

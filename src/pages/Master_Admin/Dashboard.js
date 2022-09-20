@@ -20,10 +20,10 @@ export default function Dashboard() {
                                                 <i className="material-icons">password</i>
                                                 <a>Password Settings</a>					</div>
                                         </div>
-                                        <div className="col s12 m6 l6 xl4" style={{ cursor: "pointer" }} onClick={() => { history.push("/company_setting") }}>
+                                        <div className="col s12 m6 l6 xl4" style={{ cursor: "pointer" }} onClick={() => { history.push("/company_profile") }}>
                                             <div className="tiles">
                                                 <i className="material-icons">domain</i>
-                                                <a >Company Settings</a>					</div>
+                                                <a >Company Profile</a>					</div>
                                         </div>
                                         <div className="col s12 m6 l6 xl4" style={{ cursor: "pointer" }} onClick={() => { history.push("/assign_manager") }}>
                                             <div className="tiles">

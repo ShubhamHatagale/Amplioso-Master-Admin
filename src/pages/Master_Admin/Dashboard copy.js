@@ -23,7 +23,7 @@ export default function Dashboard() {
                                         <div className="col s12 m6 l6 xl4">
                                             <div className="tiles">
                                                 <i className="material-icons">domain</i>
-                                                <a onClick={() => { history.push("/company_setting") }}>Company Settings</a>					</div>
+                                                <a onClick={() => { history.push("/company_profile") }}>Company Profile</a>					</div>
                                         </div>
                                         <div className="col s12 m6 l6 xl4">
                                             <div className="tiles">
