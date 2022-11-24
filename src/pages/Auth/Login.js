@@ -103,7 +103,7 @@ export const Login = () => {
                         localStorage.setItem("masters_id", resData.resultSet.userId)
                         localStorage.setItem("company", JSON.stringify(resData.resultSet))
                         // dispatch({ type: "COMPANY", payload: resData.resultSet })
-                        history.push("/company_profile")
+                        history.push("/password_setting")
                         M.toast({
                             html: "login Successful",
                             classes: "#e#00e676 green accent-3",
