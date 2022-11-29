@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { useHistory } from 'react-router-dom';
+import MasterSidebarRoute from '../../components/MasterAdminComponents/MasterSidebarRoute';
 
 export default function Dashboard() {
 
@@ -8,6 +9,7 @@ export default function Dashboard() {
     if (user) {
         return (
             <div id="main">
+
                 <div className="row">
                     <div className="col s12">
                         <div className="container">

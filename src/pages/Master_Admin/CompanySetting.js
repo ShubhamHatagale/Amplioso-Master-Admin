@@ -13,6 +13,8 @@ import { getAllHeadquatersApi }  from '../services/AllHeadquaters';
 import { getAllPackagesApi } from '../services/AllPackages'
 import getYear from "date-fns/getYear";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MasterSidebarRoute from '../../components/MasterAdminComponents/MasterSidebarRoute';
+import { useHistory } from 'react-router-dom';
 require("dotenv").config();
 
 export default function CompanySetting() {
@@ -43,6 +45,7 @@ export default function CompanySetting() {
     let [sectorIdName, setSectorIdName] = useState('');
     let [feedbackIdName, setFeedbackIdName] = useState('');
     let [userid, setUserId] = useState(0)
+    const history=useHistory()
     const onInputChange = (e) => {
         setSelectedUser({ ...selectedUser, [e.target.name]: e.target.value });
     };
@@ -76,7 +79,7 @@ export default function CompanySetting() {
             );
             let response = await res.json();
             let result = response.data;
-            console.log("output");
+            console.log("output--0");
             console.log(result);
             result.map((item, key) => {
                 const yearOfInception = [];
@@ -320,8 +323,18 @@ export default function CompanySetting() {
                         isOpen: true,
                         title: 'Alert',
                         subTitle: "Record Updated Successfully",
+
+                    }).then(()=>{
+                        window.location.replace("/master_admin")
+
                     })
-                    console.log("Records Submitted");
+                    // history.push({
+                    //     pathname:"/",
+                    //     state:true,
+                    // })
+                    
+                    // return (<MasterSidebarRoute data={true} />)
+                    // console.log("Records Submitted");
                 }
             })
             .catch(error => console.log('error', error));
@@ -420,7 +433,7 @@ export default function CompanySetting() {
                                             <div className="col m6 s12 padtb">
                                                 <label className="label_active">Company Headquarters</label>
                                                 <CustomSelect
-                                                    search={false}
+                                                    search={false} 
                                                     onChange={value => formik.setFieldValue('comapany_headquaters', value)}
                                                     value={formik.values.comapany_headquaters}
                                                     defValue={HeadquatersIdName}
