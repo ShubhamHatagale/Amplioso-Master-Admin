@@ -17,7 +17,7 @@ export default function MaxWidthDialog(props) {
     setConfirmDialog({ ...confirmDialog, isOpen: false, type: true });
     const user = JSON.parse(localStorage.getItem("company"));
     if (user) {
-      history.push(props.link);
+      history.push(confirmDialog.link);
     } else {
       history.push("/");
     }

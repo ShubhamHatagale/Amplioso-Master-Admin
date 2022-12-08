@@ -9,7 +9,7 @@ import { getAllEmployeeApi } from '../services/AllEmployee';
 import { getAllAvgEmployeeApi } from '../services/AllAvgEmployee';
 import { getAllFeedbackApi } from '../services/AllFeedback';
 import { getAllSectorApi } from '../services/allSector';
-import { getAllHeadquatersApi }  from '../services/AllHeadquaters';
+import { getAllHeadquatersApi } from '../services/AllHeadquaters';
 import { getAllPackagesApi } from '../services/AllPackages'
 import getYear from "date-fns/getYear";
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -27,7 +27,7 @@ export default function CompanySetting() {
     const id = localStorage.getItem("masters_id");
     const [selectedUser, setSelectedUser] = useState({});
     const [loading, setloading] = useState(0);
-    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '', type: '' })
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '', type: '', link: '' })
     const [getHeadquaterdata, setgetHeadquaterdata] = useState('');
     const [getbusinessdata, setgetbusinessdata] = useState('');
     const [getEmployeeNo, setgetEmployeeNo] = useState('');
@@ -45,7 +45,7 @@ export default function CompanySetting() {
     let [sectorIdName, setSectorIdName] = useState('');
     let [feedbackIdName, setFeedbackIdName] = useState('');
     let [userid, setUserId] = useState(0)
-    const history=useHistory()
+    const history = useHistory()
     const onInputChange = (e) => {
         setSelectedUser({ ...selectedUser, [e.target.name]: e.target.value });
     };
@@ -261,6 +261,7 @@ export default function CompanySetting() {
                 },
             )
             .required('Comapny Name is required').min(2, "Company Name must be minimum 2 characters long").max(100, "Company Name must be 2 to 15 characters long."),
+        // imageUpload: Yup.string().required("Profile Image is Required"),
         comapany_headquaters: Yup.string()
             .required('Comapany Headquater is required').matches(/^\d+$/, "Only Numbers are Allowed"),
         first_name: Yup.string().matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed. ").required('First Name is required').min(2, "First Name must be minimum 2 characters long").max(15, "First Name must be 2 to 15 characters long."),
@@ -287,6 +288,20 @@ export default function CompanySetting() {
 
     const OnSubmitForm = (values, props) => {
         console.log(values.date_of_inception)
+        console.log(imageurl)
+        console.log(imageUpload)
+        if (imageurl.includes(null)) {
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Error',
+                subTitle: "Please Select Profile Image",
+                // link:'/dbt'
+            })
+            return false
+        }
+
+
+
         setloading(1)
         var myHeaders = new Headers();
         const token = localStorage.getItem("masters_jwt");
@@ -324,7 +339,16 @@ export default function CompanySetting() {
                         title: 'Alert',
                         subTitle: "Record Updated Successfully",
 
-                    }).then(()=>{
+                    })
+                    window.location.replace("/master_admin")
+                    return false
+                    setConfirmDialog({
+                        isOpen: true,
+                        title: 'Alert',
+                        subTitle: "Record Updated Successfully",
+                        link: '/'
+
+                    }).then(() => {
                         window.location.replace("/master_admin")
 
                     })
@@ -332,7 +356,7 @@ export default function CompanySetting() {
                     //     pathname:"/",
                     //     state:true,
                     // })
-                    
+
                     // return (<MasterSidebarRoute data={true} />)
                     // console.log("Records Submitted");
                 }
@@ -387,14 +411,25 @@ export default function CompanySetting() {
                                                 <div className="col m8 s12 file-field input-field">
                                                     <div className="btn float-right">
                                                         <span>File</span>
-                                                        <input type="file" onChange={fileHandler} />
+                                                        <input type="file"
+                                                            onChange={fileHandler}
+                                                        />
                                                         {/* <img src={imageurl} className="comapnylogoimg" width="120" height="85" /> */}
                                                     </div>
                                                     <div className="file-path-wrapper">
-                                                        <input className="file-path validate" type="text" defaultValue="Company Logo" />
+                                                        <input className="file-path validate"
+                                                            type="text"
+                                                            defaultValue="Company Logo"
+                                                        />
                                                     </div>
                                                 </div>
-                                                <img src={imageurl} className="comapnylogoimg" width="120" height="85" />
+                                                {/* {console.log(imageUpload.name)} */}
+                                                <img src={imageurl}
+                                                    className="comapnylogoimg imageurl"
+                                                    width="120" height="85"
+                                                />
+                                                {formik.errors.imageUpload ? <div className='error'>{formik.errors.imageUpload}</div> : null}
+
                                             </div>
                                         </div>
                                         <div className="row">
@@ -433,7 +468,7 @@ export default function CompanySetting() {
                                             <div className="col m6 s12 padtb">
                                                 <label className="label_active">Company Headquarters</label>
                                                 <CustomSelect
-                                                    search={false} 
+                                                    search={false}
                                                     onChange={value => formik.setFieldValue('comapany_headquaters', value)}
                                                     value={formik.values.comapany_headquaters}
                                                     defValue={HeadquatersIdName}
@@ -602,7 +637,11 @@ export default function CompanySetting() {
                     </Formik>
                 </div>
             </div>
-            <MaxWidthDialog setConfirmDialog={setConfirmDialog} confirmDialog={confirmDialog} link={'/'} />
+            <MaxWidthDialog
+                setConfirmDialog={setConfirmDialog}
+                confirmDialog={confirmDialog}
+            // link={'/'} 
+            />
         </div>
     )
 }

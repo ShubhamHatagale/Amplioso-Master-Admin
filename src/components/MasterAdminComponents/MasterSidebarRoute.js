@@ -53,12 +53,12 @@ export default function MasterSidebarRoute() {
         let response = await res.json();
         let result = response.data;
         console.log("output--0");
-        console.log(result);
+        // console.log(result[0].company_logo);
         // if(result[0].comapany_headquaters && result[0].date_of_inception ){
         //     console.log("yes")
         // }
 
-        if(result[0].comapany_headquaters && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency){
+        if(result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency){
             setdisableStatus(false)
         }
 

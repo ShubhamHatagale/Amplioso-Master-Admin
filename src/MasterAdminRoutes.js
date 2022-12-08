@@ -19,6 +19,7 @@ import TransferManagersRights from "./pages/Master_Admin/TransferRights/Transfer
 import EmployeeView from "./pages/Master_Admin/TransferRights/EmployeeView";
 import TransferRights from "./pages/Master_Admin/TransferRights/TransferRights";
 import Survey from "./pages/Master_Admin/survey/Survey";
+import Check from "./components/Check";
 const MasterAdminRouting = () => {
     // const history = useHistory();
     // const location = useLocation();
@@ -44,6 +45,7 @@ const MasterAdminRouting = () => {
                     data1={<MasterHeader />}
                 />
             </ProtectedRoute>
+            
             <ProtectedRoute exact path="/company_profile">
                 <MasterSidebar data={<CompanySetting />}
                     data1={<MasterHeader />}
@@ -54,6 +56,7 @@ const MasterAdminRouting = () => {
                     data1={<MasterHeader />}
                 />
             </ProtectedRoute>
+            
             <ProtectedRoute exact path="/assign_manager">
                 <MasterSidebar data={<AssignManagers />}
                 // data1={<MasterHeader />}
