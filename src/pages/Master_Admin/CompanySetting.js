@@ -100,7 +100,17 @@ export default function CompanySetting() {
                     last_name: item.last_name,
                     created_by: item.created_by
                 });
-                setImageurl("http://dev.amplioso.com/images/" + item.company_logo)
+                if (item.company_logo) {
+                    setImageurl("http://dev.amplioso.com/images/" + item.company_logo)
+                } else {
+                    setConfirmDialog({
+                        isOpen: true,
+                        title: 'Notification',
+                        subTitle: "Please Upload Profile Image",
+                        // link:'/dbt'
+                    })
+
+                }
                 const fetchEmployeeddl = async () => {
                     const employee = await getAllEmployeeApi(item.number_of_employee)
                     setEmployeeIdName(employee)
@@ -290,7 +300,7 @@ export default function CompanySetting() {
         console.log(values.date_of_inception)
         console.log(imageurl)
         console.log(imageUpload)
-        if (imageurl.includes(null)) {
+        if (imageurl.includes(null) || imageurl == "" || imageurl == "null" || imageurl == null) {
             setConfirmDialog({
                 isOpen: true,
                 title: 'Error',
@@ -299,6 +309,7 @@ export default function CompanySetting() {
             })
             return false
         }
+
 
 
 
@@ -341,17 +352,18 @@ export default function CompanySetting() {
 
                     })
                     window.location.replace("/master_admin")
-                    return false
-                    setConfirmDialog({
-                        isOpen: true,
-                        title: 'Alert',
-                        subTitle: "Record Updated Successfully",
-                        link: '/'
 
-                    }).then(() => {
-                        window.location.replace("/master_admin")
+                    // return false
+                    // setConfirmDialog({
+                    //     isOpen: true,
+                    //     title: 'Alert',
+                    //     subTitle: "Record Updated Successfully",
+                    //     link: '/'
 
-                    })
+                    // }).then(() => {
+                    //     window.location.replace("/master_admin")
+
+                    // })
                     // history.push({
                     //     pathname:"/",
                     //     state:true,
@@ -405,6 +417,7 @@ export default function CompanySetting() {
                                                 type="text"
                                                 onInputChange={onInputChange}
                                                 value={selectedUser.company_name}
+                                                className="col m12 s12 padtb"
                                             />
                                             {/* </div> */}
                                             <div className="col m6 s12 padtb">
@@ -423,10 +436,12 @@ export default function CompanySetting() {
                                                         />
                                                     </div>
                                                 </div>
-                                                {/* {console.log(imageUpload.name)} */}
+                                                {/* {console.log(imageurl)} */}
                                                 <img src={imageurl}
                                                     className="comapnylogoimg imageurl"
                                                     width="120" height="85"
+                                                    alt='Upload Image'
+                                                    style={{ color: "rgb(0 204 169)", fontSize: "20px", fontWeight: "bolder" }}
                                                 />
                                                 {formik.errors.imageUpload ? <div className='error'>{formik.errors.imageUpload}</div> : null}
 
@@ -483,12 +498,13 @@ export default function CompanySetting() {
                                                 <label className="label_active">Year of Business Inception (Optional) </label>
                                                 <CustomSelect
                                                     search={true}
-                                                    className='select-dropdown dropdown-trigger'
                                                     onChange={value => formik.setFieldValue('date_of_inception', value)}
-                                                    defValue={selectedUser.date_of_inception}
                                                     value={formik.values.date_of_inception}
+                                                    defValue={selectedUser.date_of_inception}
                                                     options={years}
                                                     Field="Bussiness"
+                                                    className='select-dropdown dropdown-trigger'
+
                                                 />
                                                 {formik.errors.date_of_inception ? <div className='error'>{formik.errors.date_of_inception}</div> : null}
                                                 {/* <DatePicker

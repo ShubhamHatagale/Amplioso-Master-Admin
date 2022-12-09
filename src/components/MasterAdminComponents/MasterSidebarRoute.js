@@ -6,6 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useHistory, useLocation } from 'react-router-dom';
+import MaxWidthDialog from '../AlertDialogBox';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -29,7 +30,9 @@ export default function MasterSidebarRoute() {
     const [loading, setloading] = useState(0);
     let [imageurl, setImageurl] = useState('');
     const [disableStatus, setdisableStatus] = useState(true);
-    const locatonData=useLocation()
+    const locatonData = useLocation()
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '', type: '', link: '' })
+
     const handleClick = () => {
         setOpen(!open);
     };
@@ -58,8 +61,9 @@ export default function MasterSidebarRoute() {
         //     console.log("yes")
         // }
 
-        if(result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency){
+        if (result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency) {
             setdisableStatus(false)
+
         }
 
         result.map((item, key) => {
@@ -86,8 +90,28 @@ export default function MasterSidebarRoute() {
 
         });
         setloading(0);
+
     };
 
+
+    const gotoPage = (path) => {
+        // alert("hh")
+
+        // disableStatus===false ?history.push("/assign_manager"):history.push("/company_profile") }
+        // alert(path)
+        if (disableStatus === false) {
+            history.push(path)
+        } else {
+            // alert(path)
+            setConfirmDialog({
+                isOpen: true,
+                title: 'Notification',
+                subTitle: "Please Fill In The Company Profile All The Details To Access All The Other Functionalities",
+                // link:'/dbt'
+            })
+            history.push("/company_profile")
+        }
+    }
 
     console.log(locatonData)
 
@@ -98,101 +122,112 @@ export default function MasterSidebarRoute() {
 
     return (
         <>
-        {selectedUser ? (<div>
-        <List>
+            <MaxWidthDialog
+                setConfirmDialog={setConfirmDialog}
+                confirmDialog={confirmDialog}
+            // link={'/'} 
+            />
+            {selectedUser ? (<div>
+                <List>
 
-            {console.log(selectedUser)}
-            <div onClick={() => { history.push("/") }}>
-                <ListItem button >
-                    <ListItemIcon>
-                        {/* <DvrIcon /> */}
-                        <i className="material-icons">dvr</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Dashboard" />
-                </ListItem>
-            </div>
-            <div onClick={() => { history.push("/password_setting") }}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <i className="material-icons">password</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Password Settings" />
-                </ListItem>
-            </div>
-            <div onClick={() => { history.push("/company_profile") }}>
-                <ListItem button>
-                    <ListItemIcon>
-                        <i className="material-icons">domain</i>
-                        {/* <Domain /> */}
-                    </ListItemIcon>
-                    <ListItemText primary="Company Profile" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/assign_manager") }}>
-                    <ListItemIcon>
-                        {/* <People /> */}
-                        <i className="material-icons">people</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Assign Managers" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/view_all_users") }}>
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">manage_search </i>
-                    </ListItemIcon>
-                    <ListItemText primary="View All Users" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/transfer_manager_rights") }}>
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">transform</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Transfer Manager Rights" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/request_questionarie") }}>
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">add_to_queue</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Request Questionarie" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/") }} >
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">miscellaneous_services</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Manage Hierarchy" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/survey") }}>
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">query_stats</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Survey" />
-                </ListItem>
-            </div>
-            <div >
-                <ListItem button disabled={disableStatus} onClick={() => { history.push("/") }}>
-                    <ListItemIcon>
-                        {/* <PersonIcon /> */}
-                        <i className="material-icons">production_quantity_limits</i>
-                    </ListItemIcon>
-                    <ListItemText primary="Other Changes" />
-                </ListItem>
-            </div>
-        </List>
-        </div>):null}
+                    {console.log(disableStatus)}
+
+                    <div onClick={() =>  gotoPage("/") }>
+                        <ListItem button >
+                            <ListItemIcon>
+                                {/* <DvrIcon /> */}
+                                <i className="material-icons">dvr</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItem>
+                    </div>
+                    <div onClick={() => gotoPage("/password_setting") }>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <i className="material-icons">password</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Password Settings" />
+                        </ListItem>
+                    </div>
+
+                    <div onClick={() => { history.push("/company_profile") }}>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <i className="material-icons">domain</i>
+                                {/* <Domain /> */}
+                            </ListItemIcon>
+                            <ListItemText primary="Company Profile" />
+                        </ListItem>
+                    </div>
+
+
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/assign_manager")}>
+                            <ListItemIcon >
+                                {/* <People /> */}
+                                <i className="material-icons">people</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Assign Managers" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/view_all_users")}>
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">manage_search </i>
+                            </ListItemIcon>
+                            <ListItemText primary="View All Users" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/transfer_manager_rights")}>
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">transform</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Transfer Manager Rights" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/request_questionarie")}>
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">add_to_queue</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Request Questionarie" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/")} >
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">miscellaneous_services</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Manage Hierarchy" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/survey")}>
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">query_stats</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Survey" />
+                        </ListItem>
+                    </div>
+                    <div >
+                        <ListItem button onClick={() => gotoPage("/")}>
+                            <ListItemIcon>
+                                {/* <PersonIcon /> */}
+                                <i className="material-icons">production_quantity_limits</i>
+                            </ListItemIcon>
+                            <ListItemText primary="Other Changes" />
+                        </ListItem>
+                    </div>
+
+
+                </List>
+            </div>) : null}
         </>
     );
 }
