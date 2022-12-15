@@ -79,7 +79,7 @@ const Survey = () => {
             <div className="row">
                 <div className="col s9">
                     <div className="section-title">
-                        <h1>View All Users</h1>
+                        <h1>View All Surveys</h1>
                         {/* <div className="nav-wrapper inner-breadcrumb">
                         <div className="col s12 pad-l-0">
                             <a href="#!">Dashboard </a>

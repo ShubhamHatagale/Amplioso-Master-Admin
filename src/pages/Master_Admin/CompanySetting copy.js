@@ -56,94 +56,6 @@ export default function CompanySetting() {
         }
     };
 
-
-
-    const GetData = async () => {
-        const token = localStorage.getItem("masters_jwt");
-        var myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'multipart/form-data')
-        myHeaders.append("Authorization", token);
-        let res = await fetch(
-            APIUrl + `/company/${id}`,
-            {
-                method: "get",
-                headers: myHeaders
-            }
-        );
-        let response = await res.json();
-        let result = response.data;
-        console.log("output--0");
-        console.log(result);
-        if (result[0].comapany_headquaters && result[0].company_logo && result[0].number_of_employee && result[0].business_sector && result[0].feedback_frequency) {
-            window.location.replace("/master_admin")
-        }
-        result.map((item, key) => {
-            const yearOfInception = [];
-            yearOfInception[0] = item.date_of_inception;
-            setSelectedUser({
-                company_name: item.company_name,
-                company_logo: item.company_logo,
-                comapany_headquaters: item.comapany_headquaters,
-                feedback_frequency: item.feedback_frequency,
-                average_employee_compansation: item.average_employee_compansation,
-                business_sector: item.business_sector,
-                number_of_employee: item.number_of_employee,
-                current_package: item.current_package,
-                date_of_inception: yearOfInception,
-                username: item.username,
-                password: item.password,
-                first_name: item.first_name,
-                last_name: item.last_name,
-                created_by: item.created_by
-            });
-            if (item.company_logo) {
-                setImageurl("http://dev.amplioso.com/images/" + item.company_logo)
-            }
-            // else {
-            // setConfirmDialog({
-            //     isOpen: true,
-            //     title: 'Notification',
-            //     subTitle: "Please Upload Profile Image",
-            //     // link:'/dbt'
-            // })
-
-            // }
-            const fetchEmployeeddl = async () => {
-                const employee = await getAllEmployeeApi(item.number_of_employee)
-                setEmployeeIdName(employee)
-            };
-            const fetchAvgEmployeeddl = async () => {
-                const avgemployee = await getAllAvgEmployeeApi(item.average_employee_compansation)
-                setAvgEmployeeIdName(avgemployee)
-            };
-            const fetchSectorddl = async () => {
-                const sector = await getAllSectorApi(item.business_sector);
-                setSectorIdName(sector)
-            };
-            const fetchFeedbackddl = async () => {
-                console.log("feedback : " + item.feedback_frequency);
-                const feedback = await getAllFeedbackApi(item.feedback_frequency)
-                setFeedbackIdName(feedback);
-                console.log(feedback);
-            };
-            const fetchHeadquatersId = async () => {
-                const feedback = await getAllHeadquatersApi(item.comapany_headquaters)
-                setHeadquatersIdName(feedback);
-            };
-            const fetchPackageId = async () => {
-                const feedback = await getAllPackagesApi(item.current_package)
-                setPackagesIdName(feedback);
-            };
-            fetchHeadquatersId();
-            fetchEmployeeddl();
-            fetchAvgEmployeeddl();
-            fetchSectorddl();
-            fetchFeedbackddl();
-            fetchPackageId();
-        });
-        setloading(0);
-    };
-
     useEffect(() => {
         setloading(1);
         getHeadquaters();
@@ -190,16 +102,15 @@ export default function CompanySetting() {
                 });
                 if (item.company_logo) {
                     setImageurl("http://dev.amplioso.com/images/" + item.company_logo)
-                }
-                // else {
-                // setConfirmDialog({
-                //     isOpen: true,
-                //     title: 'Notification',
-                //     subTitle: "Please Upload Profile Image",
-                //     // link:'/dbt'
-                // })
+                } else {
+                    setConfirmDialog({
+                        isOpen: true,
+                        title: 'Notification',
+                        subTitle: "Please Upload Profile Image",
+                        // link:'/dbt'
+                    })
 
-                // }
+                }
                 const fetchEmployeeddl = async () => {
                     const employee = await getAllEmployeeApi(item.number_of_employee)
                     setEmployeeIdName(employee)
@@ -361,35 +272,22 @@ export default function CompanySetting() {
             )
             .required('Comapny Name is required').min(2, "Company Name must be minimum 2 characters long").max(100, "Company Name must be 2 to 15 characters long."),
         // imageUpload: Yup.string().required("Profile Image is Required"),
-
+        comapany_headquaters: Yup.string()
+            .required('Comapany Headquater is required').matches(/^\d+$/, "Only Numbers are Allowed"),
         first_name: Yup.string().matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed. ").required('First Name is required').min(2, "First Name must be minimum 2 characters long").max(15, "First Name must be 2 to 15 characters long."),
         last_name: Yup.string().matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed.").required('Last Name is required').min(2, "Last Name must be minimum 2 characters long").max(15, "Last Name must be 2 to 15 characters long."),
-        comapany_headquaters: Yup.number()
-            .required('Company Headquarters is required')
-            .nullable(true)
-            .min(0)
-            .integer(),
-        number_of_employee: Yup.number()
-            .required('Number Of Employees is required')
-            .nullable(true)
-            .min(0)
-            .integer(),
-        business_sector: Yup.number()
-            .required('Business Sector is required')
-            .nullable(true)
-            .min(0)
-            .integer(),
-        feedback_frequency: Yup.number()
-            .required('Feedback Frequency is required')
-            .nullable(true)
-            .min(0)
-            .integer(),
-        // average_employee_compansation: Yup.string()
-        //     .required('Average Employee Compansation is required').matches(/^\d+$/, "Only Numbers are Allowed"),
-        // date_of_inception: Yup.number()
-        //     .required('Date of Inception is required'),
+        number_of_employee: Yup.string()
+            .required('No of employee is required').matches(/^\d+$/, "Only Numbers are Allowed"),
+        business_sector: Yup.string()
+            .required('Business Sector is required').matches(/^\d+$/, "Only Numbers are Allowed"),
+        feedback_frequency: Yup.string()
+            .required('feed back Frequency is required').matches(/^\d+$/, "Only Numbers are Allowed"),
+        average_employee_compansation: Yup.string()
+            .required('Average Employee Compansation is required').matches(/^\d+$/, "Only Numbers are Allowed"),
+        date_of_inception: Yup.number()
+            .required('Date of Inception is required'),
         current_package: Yup.string()
-            .required('Current Package is required').matches(/^\d+$/, "Only Numbers are Allowed"),
+            .required('Current PAckage is required').matches(/^\d+$/, "Only Numbers are Allowed"),
         username: Yup.string()
             .email('Email is invalid')
             .required('Email is required'),
@@ -399,17 +297,9 @@ export default function CompanySetting() {
     });
 
     const OnSubmitForm = (values, props) => {
-        // console.log(!(values.date_of_inception.length))
-        // console.log(values.date_of_inception)
-        // console.log(values.average_employee_compansation)
-
-
-
-        // // return false
-        console.log(imageurl == "")
+        console.log(values.date_of_inception)
+        console.log(imageurl)
         console.log(imageUpload)
-
-        // return false
         if (imageurl.includes(null) || imageurl == "" || imageurl == "null" || imageurl == null) {
             setConfirmDialog({
                 isOpen: true,
@@ -433,19 +323,13 @@ export default function CompanySetting() {
             formdata.append("company_logo", imageUpload, imageUpload.name);
         }
         formdata.append('comapany_headquaters', values.comapany_headquaters);
-        if (!(values.date_of_inception.length)) {
-            formdata.append('date_of_inception', values.date_of_inception);
-        }
-
-
+        formdata.append('date_of_inception', values.date_of_inception);
         formdata.append('first_name', values.first_name);
         formdata.append('last_name', values.last_name);
         formdata.append('number_of_employee', values.number_of_employee);
         formdata.append('business_sector', values.business_sector);
         formdata.append('feedback_frequency', values.feedback_frequency);
-        if ((values.average_employee_compansation)) {
-            formdata.append('average_employee_compansation', values.average_employee_compansation);
-        }
+        formdata.append('average_employee_compansation', values.average_employee_compansation);
         formdata.append('current_package', values.current_package);
         formdata.append('username', values.username);
         formdata.append('password', values.password);
@@ -467,7 +351,8 @@ export default function CompanySetting() {
                         subTitle: "Record Updated Successfully",
 
                     })
-                    GetData()
+                    window.location.replace("/master_admin")
+
                     // return false
                     // setConfirmDialog({
                     //     isOpen: true,
@@ -517,7 +402,6 @@ export default function CompanySetting() {
                             <Form>
                                 {getHeadquaterdata && getbusinessdata && getEmployeeNo && years && getBusinessSectordata && getfeeddata && getinceptiondata && HeadquatersIdName && employeeIdName && sectorIdName && avgEmployeeIdName && feedbackIdName ? (
                                     <div>
-                                        {console.log(formik.errors)}
                                         <div className="row">
                                             {/* <div class="input-field col m6 s12 pad-r"> */}
                                             {/* <TextField
@@ -553,12 +437,12 @@ export default function CompanySetting() {
                                                     </div>
                                                 </div>
                                                 {/* {console.log(imageurl)} */}
-                                                {imageurl != "" ? (<img src={imageurl}
+                                                <img src={imageurl}
                                                     className="comapnylogoimg imageurl"
                                                     width="120" height="85"
                                                     alt='Upload Image'
                                                     style={{ color: "rgb(0 204 169)", fontSize: "20px", fontWeight: "bolder" }}
-                                                />) : <h1 style={{ lineHeight: "40px", textAlign: "center" }}>Upload Logo</h1>}
+                                                />
                                                 {formik.errors.imageUpload ? <div className='error'>{formik.errors.imageUpload}</div> : null}
 
                                             </div>
@@ -581,7 +465,6 @@ export default function CompanySetting() {
                                                 value={selectedUser.last_name}
                                             />
                                         </div>
-
                                         <div className="row">
                                             {/* <div>
                                         <label>Organizations Headquarters Location</label>
@@ -609,19 +492,17 @@ export default function CompanySetting() {
                                                     Fieldname={'comapany_headquaters'}
                                                     className='select-dropdown dropdown-trigger'
                                                 />
-                                                {formik.errors.comapany_headquaters ? <div className='error'>{formik.errors.comapany_headquaters}</div> : null}
+                                                {formik.errors.number_of_employee ? <div className='error'>{formik.errors.number_of_employee}</div> : null}
                                             </div>
                                             <div className="col m6 s12 padtb">
                                                 <label className="label_active">Year of Business Inception (Optional) </label>
                                                 <CustomSelect
                                                     search={true}
-
                                                     onChange={value => formik.setFieldValue('date_of_inception', value)}
                                                     value={formik.values.date_of_inception}
                                                     defValue={selectedUser.date_of_inception}
                                                     options={years}
                                                     Field="Bussiness"
-                                                    Fieldname={'Bussiness'}
                                                     className='select-dropdown dropdown-trigger'
 
                                                 />

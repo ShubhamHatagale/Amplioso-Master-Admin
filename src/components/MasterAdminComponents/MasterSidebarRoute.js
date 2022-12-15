@@ -61,9 +61,13 @@ export default function MasterSidebarRoute() {
         //     console.log("yes")
         // }
 
-        if (result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency) {
-            setdisableStatus(false)
 
+        // if (result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency) {
+        //     setdisableStatus(false)
+        // }
+
+        if (result[0].comapany_headquaters && result[0].company_logo && result[0].number_of_employee && result[0].business_sector && result[0].feedback_frequency) {
+            setdisableStatus(false)
         }
 
         result.map((item, key) => {
@@ -96,7 +100,6 @@ export default function MasterSidebarRoute() {
 
     const gotoPage = (path) => {
         // alert("hh")
-
         // disableStatus===false ?history.push("/assign_manager"):history.push("/company_profile") }
         // alert(path)
         if (disableStatus === false) {
@@ -148,7 +151,7 @@ export default function MasterSidebarRoute() {
                             </ListItemIcon>
                             <ListItemText primary="Password Settings" />
                         </ListItem>
-                    </div>
+                    </div> 
 
                     <div onClick={() => { history.push("/company_profile") }}>
                         <ListItem button>

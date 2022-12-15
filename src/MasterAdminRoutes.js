@@ -70,9 +70,10 @@ const MasterAdminRouting = () => {
         //     console.log("yes")
         // }
 
-        if (result[0].comapany_headquaters && result[0].company_logo && result[0].date_of_inception && result[0].number_of_employee && result[0].business_sector && result[0].average_employee_compansation && result[0].feedback_frequency) {
+        if (result[0].comapany_headquaters && result[0].company_logo && result[0].number_of_employee && result[0].business_sector && result[0].feedback_frequency) {
             setdisableStatus(false)
         }
+
 
         result.map((item, key) => {
             const yearOfInception = [];
