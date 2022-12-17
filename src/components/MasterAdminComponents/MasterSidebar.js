@@ -134,9 +134,15 @@ export default function MasterSidebar(props) {
     };
 
     const logOut = () => {
-        localStorage.clear()
+        // localStorage.clear()
+        localStorage.removeItem("company")
+        localStorage.removeItem("masters_jwt")
+        localStorage.removeItem("masters_id")
+
+        
         // dispatch({ type: "CLEAR" })
-        history.push("/")
+        window.location.replace("http://dev.amplioso.com/sign_in")
+        // history.push("/")
     }
     const history = useHistory()
     const classes = useStyles();

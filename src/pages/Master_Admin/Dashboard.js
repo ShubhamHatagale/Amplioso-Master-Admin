@@ -6,6 +6,7 @@ export default function Dashboard() {
 
     const history = useHistory()
     const user = JSON.parse(localStorage.getItem("company"));
+    
     if (user) {
         return (
             <div id="main">
