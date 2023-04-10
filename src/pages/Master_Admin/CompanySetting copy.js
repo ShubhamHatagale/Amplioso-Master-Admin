@@ -351,7 +351,7 @@ export default function CompanySetting() {
                         subTitle: "Record Updated Successfully",
 
                     })
-                    window.location.replace("/master_admin")
+                    window.location.replace("/master_admin/dash_board")
 
                     // return false
                     // setConfirmDialog({

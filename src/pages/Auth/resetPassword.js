@@ -38,7 +38,7 @@ export const ResetPassword = () => {
                         M.toast({ html: "Password Updated Successfully", classes: "#e#00e676 green accent-3" })
                         const user = JSON.parse(localStorage.getItem("company"));
                         if (!user) {
-                            history.push("/");
+                            history.push("/dash_board");
                         }
                     }
                 })

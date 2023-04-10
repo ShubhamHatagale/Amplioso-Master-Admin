@@ -19,7 +19,7 @@ export default function MaxWidthDialog(props) {
     if (user) {
       history.push(confirmDialog.link);
     } else {
-      history.push("/");
+      history.push("/dash_board");
     }
   }
   const [fullWidth, setFullWidth] = React.useState(true);

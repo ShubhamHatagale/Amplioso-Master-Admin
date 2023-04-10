@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 export default ({ onChange, options, value, className, Field, defValue, disable, search }) => {
+
     let issearch = search == true ? true : false;
     const dot = () => ({
         alignItems: "center",
@@ -49,32 +50,77 @@ export default ({ onChange, options, value, className, Field, defValue, disable,
 
     const renderList = () => {
         if (Field == 'Sector') {
-            return (options.map(data => ({ label: data.sector_name, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.sector_name, value: data.id })))
+            }
         }
         if (Field == 'Bussiness') {
-            return (options.map(data => ({ label: data, value: data })))
+            if (options) {
+                return (options.map(data => ({ label: data, value: data })))
+            }
         }
         if (Field == 'Employee') {
-            return (options.map(data => ({ label: data.number_of_employee, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.number_of_employee, value: data.id })))
+            }
         }
         if (Field == 'AvgEmployee') {
-            return (options.map(data => ({ label: data.average_employees, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.average_employees, value: data.id })))
+            }
         }
         if (Field == 'FeedBack') {
-            return (options.map(data => ({ label: data.feedback_frequencies, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.feedback_frequencies, value: data.id })))
+            }
         }
         if (Field == 'Role') {
-            return (options.map(data => ({ label: data.role, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.role, value: data.id })))
+            }
         }
         if (Field == 'Headquaters') {
-            return (options.map(data => ({ label: data.country_name, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.country_name, value: data.id })))
+            }
         }
         if (Field == 'Package') {
-            return (options.map(data => ({ label: data.package_name, value: data.id })))
+            if (options) {
+                return (options.map(data => ({ label: data.package_name, value: data.id })))
+            }
         }
         if (Field == 'Question_type') {
-            return (options.map(data => ({ label: data.label, value: data.value })))
+            if (options) {
+                return (options.map(data => ({ label: data.label, value: data.value })))
+            }
         }
+        if (Field === 'manager') {
+            if (options) {
+                return (options.map(data => ({ label: data.first_name + " " + data.last_name, value: data.id })))
+            }
+        }
+        if (Field === 'emp') {
+            if (options) {
+                return (options.map(data => ({ label: data.first_name + " " + data.last_name, value: data.id })))
+            }
+        }
+        if (Field === 'emp_year') {
+            if (options) {
+                return (options.map(data => ({ label: data.feedback_year, value: data.id })))
+            }
+        }
+
+        if (Field === 'feed_freq') {
+            if (options) {
+                return (options.map(data => ({ label: data.feedback_frequencies, value: data.id })))
+            }
+        }
+        if (Field === 'year') {
+            if (options) {
+                return (options.map(data => ({ label: data, value: data })))
+            }
+        }
+
     }
     return (
         <div>

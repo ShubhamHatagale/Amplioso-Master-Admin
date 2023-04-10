@@ -135,7 +135,7 @@ export default function MasterSidebarRoute() {
 
                     {console.log(disableStatus)}
 
-                    <div onClick={() =>  gotoPage("/") }>
+                    <div onClick={() =>  gotoPage("/dash_board") }>
                         <ListItem button >
                             <ListItemIcon>
                                 {/* <DvrIcon /> */}
@@ -201,7 +201,7 @@ export default function MasterSidebarRoute() {
                         </ListItem>
                     </div>
                     <div >
-                        <ListItem button onClick={() => gotoPage("/")} >
+                        <ListItem button onClick={() => gotoPage("/dash_board")} >
                             <ListItemIcon>
                                 {/* <PersonIcon /> */}
                                 <i className="material-icons">miscellaneous_services</i>
@@ -219,7 +219,7 @@ export default function MasterSidebarRoute() {
                         </ListItem>
                     </div>
                     <div >
-                        <ListItem button onClick={() => gotoPage("/")}>
+                        <ListItem button onClick={() => gotoPage("/dash_board")}>
                             <ListItemIcon>
                                 {/* <PersonIcon /> */}
                                 <i className="material-icons">production_quantity_limits</i>

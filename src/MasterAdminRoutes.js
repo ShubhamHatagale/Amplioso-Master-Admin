@@ -133,7 +133,7 @@ const MasterAdminRouting = () => {
                         />
                     </ProtectedRoute>
                 
-                    <ProtectedRoute exact path="/">
+                    <ProtectedRoute exact path="/dash_board">
                         <MasterSidebar data={<MasterDashboard />}
                             data1={<MasterHeader />}
                         />
