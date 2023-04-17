@@ -116,7 +116,7 @@ export default ({ onChange, options, value, className, Field, defValue, disable,
             }
         }
         if (Field === 'year') {
-            if (options) {
+            if (options) { 
                 return (options.map(data => ({ label: data, value: data })))
             }
         }
