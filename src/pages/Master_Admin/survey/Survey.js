@@ -135,7 +135,11 @@ export default function Survey() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", id.token);
+<<<<<<< HEAD
         var raw = JSON.stringify({
+=======
+        var raw = JSON.stringify({ 
+>>>>>>> temp-branch
             manager_id: manager_id,
             employee_id: val_emp,
             feedback_frequency: val_feed,
@@ -379,7 +383,10 @@ export default function Survey() {
                         </div>
                     </div> */}
                 </div>
+<<<<<<< HEAD
                 {console.log("check-->" + resultLength)}
+=======
+>>>>>>> temp-branch
                 {(resultLength == 0) ? (
                     <div className="pt-5 main-screen">
 
