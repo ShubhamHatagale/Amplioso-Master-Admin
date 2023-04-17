@@ -1,4 +1,4 @@
-import { CircularProgress } from '@material-ui/core';
+import { Box, CircularProgress, FormControl } from '@material-ui/core';
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import MaterialTable from 'material-table'
@@ -33,17 +33,25 @@ export default function Survey() {
     let [extensionIdlabel, setextensionIdlabel] = useState('');
     let [resultLength, setresultLength] = useState('');
     let [generalmanagerid, setGenerealmanagerid] = useState('');
-    const [employeeList, setemployeeList] = useState('');
-    const [ManagerList, setManagerList] = useState('');
+    const [employeeList, setemployeeList] = useState([]);
+    const [ManagerList, setManagerList] = useState([]);
 
-    const [feed_freqList, setfeed_freqList] = useState('');
-    const [feedyear, setfeedyear] = useState('');
+    const [feed_freqList, setfeed_freqList] = useState([]);
+    const [feedyear, setfeedyear] = useState([]);
 
     // const [yearList, setyearList] = useState('');
     const yearList = range(1800, getYear(new Date()));
     const history = useHistory()
 
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '', type: '' })
+
+    const [DefaultItem, setDefaultItem] = useState();
+    const [val_emp, setval_emp] = useState();
+    const [val_feed, setval_feed] = useState();
+    const [val_year, setval_year] = useState('');
+
+    const Default = { firstName: "John", lastName: "Doe", age: 46 };
+
 
     const onInputChange = (e) => {
         setSelectedUser({ ...selectedUser, [e.target.name]: e.target.value });
@@ -119,7 +127,8 @@ export default function Survey() {
     });
 
     const OnSubmitForm = async (values) => {
-
+        let manager_id=feedyear[0].manager_id;
+        console.log(feedyear[0].manager_id)
         console.log(values);
         console.log(values.manager);
 
@@ -127,10 +136,10 @@ export default function Survey() {
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", id.token);
         var raw = JSON.stringify({
-            manager_id: values.manager,
-            employee_id: values.emp,
-            feedback_frequency: values.feed_freq,
-            year: values.year
+            manager_id: manager_id,
+            employee_id: val_emp,
+            feedback_frequency: val_feed,
+            year: val_year
         })
         var requestOptions = {
             method: "POST",
@@ -168,24 +177,6 @@ export default function Survey() {
     };
 
 
-    const getEmployyes = async (Para_id) => {
-        var myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'multipart/form-data')
-        myHeaders.append("Authorization", id.token);
-        console.log(id.userId)
-
-        let res = await fetch(BaseURL + `/employeedetails/manager/${Para_id}`,
-            {
-                method: "get",
-                headers: myHeaders
-            }
-        );
-        let response = await res.json();
-        let result = response.data;
-        console.log(result);
-        setemployeeList(result);
-
-    }
 
 
     const getManagers = async () => {
@@ -241,9 +232,116 @@ export default function Survey() {
         setfeed_freqList(arr);
     }
 
-    const handleChangeA = (e) => {
-        // console.log(e)
-        getEmployyes(e)
+    const handleChangeA = async (e) => {
+        console.log(e.target.value)
+        var name = e.target.name;
+        var value = e.target.value;
+
+
+
+        console.log(name)
+        switch (name) {
+            case "manager":
+
+                setfeed_freqList([])
+                setfeedyear([])
+                setfeedyear([])
+
+                var myHeaders = new Headers();
+                myHeaders.append('Content-Type', 'multipart/form-data')
+                myHeaders.append("Authorization", id.token);
+                console.log(id.userId)
+
+                let res = await fetch(BaseURL + `/employeedetails/manager/${value}`,
+                    {
+                        method: "get",
+                        headers: myHeaders
+                    }
+                );
+                let response = await res.json();
+                let result = response.data;
+                console.log(result);
+                setemployeeList(result);
+                setDefaultItem(value)
+                break;
+            case "employee":
+                setfeedyear([])
+                setval_emp(value)
+                console.log("mannage")
+                let myHeaders1 = new Headers();
+                myHeaders1.append('Content-Type', 'multipart/form-data')
+                myHeaders1.append("Authorization", id.token);
+                let res1 = await fetch(BaseURL + `/collect_feedback/employee/${value}`,
+                    {
+                        method: "get",
+                        headers: myHeaders1
+                    }
+                );
+                let response1 = await res1.json();
+                let result1 = response1.data;
+                console.log(employeeList)
+
+                // console.log(result1)
+                // var arr = []
+                // var arr2 = []
+
+                // // var arrYear = []
+                // employeeList.map((item, key) => {
+                //     console.log(FeedFreq[item.feedback_frequency])
+                //     arr.push(FeedFreq[item.feedback_frequency - 1])
+                //     arr2.push(item.feedback_year)
+                // })
+                // console.log(arr)
+                // console.log(arr2)
+                // setfeedyear(arr2)
+                setfeed_freqList(result1);
+                break;
+
+            case "feedback":
+                console.log(value)
+                console.log(employeeList)
+                setval_feed(value)
+
+                let myHeaders2 = new Headers();
+                myHeaders2.append('Content-Type', 'multipart/form-data')
+                myHeaders2.append("Authorization", id.token);
+                let res2 = await fetch(BaseURL + `/collect_feedback/employee/${value}`,
+                    {
+                        method: "get",
+                        headers: myHeaders2
+                    }
+                );
+                let response2 = await res2.json();
+                let result2 = response2.data;
+                console.log(employeeList)
+
+                // console.log(result2)
+                // var arr = []
+                // var arr2 = []
+
+                // // var arrYear = []
+                // employeeList.map((item, key) => {
+                //     console.log(FeedFreq[item.feedback_frequency])
+                //     arr.push(FeedFreq[item.feedback_frequency - 2])
+                //     arr2.push(item.feedback_year)
+                // })
+                // console.log(arr)
+                // console.log(arr2)
+                setfeedyear(result2)
+                // setfeed_freqList(result1);
+                // var yearArr = [];
+                // console.log(employeeList[e - 1])
+                // yearArr.push(employeeList[e - 1])
+                // setfeedyear(yearArr)
+                break;
+            case "year":
+                setval_year(value)
+                break
+            default:
+            // text = "No value found";
+        }
+
+
     }
 
     const handleChangeB = (e) => {
@@ -254,10 +352,10 @@ export default function Survey() {
     const handleChangeC = (e) => {
         console.log(e)
         console.log(feedyear)
-        
-        var yearArr=[];
-        console.log(employeeList[e-1])
-        yearArr.push(employeeList[e-1])
+
+        var yearArr = [];
+        console.log(employeeList[e - 1])
+        yearArr.push(employeeList[e - 1])
         setfeedyear(yearArr)
 
         // setfeedyear(feedyear[e])
@@ -265,6 +363,8 @@ export default function Survey() {
 
         // getFeedback(e)
     }
+
+
 
 
     return (
@@ -279,7 +379,8 @@ export default function Survey() {
                         </div>
                     </div> */}
                 </div>
-                {(resultLength > 0) ? (
+                {console.log("check-->" + resultLength)}
+                {(resultLength == 0) ? (
                     <div className="pt-5 main-screen">
 
                         {ManagerList && yearList ? (
@@ -302,13 +403,36 @@ export default function Survey() {
                                     </div>
 
                                     <div className="col m4 s12 padtb">
-                                        <CustomSelect
-                                            onChange={handleChangeA}
-                                            options={ManagerList}
-                                            Field={'manager'}
-                                            Fieldname={'manager'}
-                                            className='select-dropdown dropdown-trigger'
-                                        />
+
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Manager</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    name='manager'
+                                                    value={DefaultItem}
+                                                    // placeholder="seee"
+                                                    onChange={handleChangeA}
+                                                    label="DefaultItem"
+                                                    // onChange={(e) => setDefaultItem(e.target.value)}
+                                                    style={{ border: "0.5px solid #e7d4d4", borderRadius: "2px", padding: "5px", height: "50px" }}
+                                                >
+
+                                                    {ManagerList.map((item, key) => {
+                                                        return (
+                                                            <MenuItem value={item.id} >{item.first_name} {item.last_name}</MenuItem>
+                                                        )
+                                                    })}
+                                                    {/* {Default.map((item, key) => {
+                                                            return (
+                                                                <MenuItem value={item.id} >{item.first_name} {item.last_name}</MenuItem>
+                                                            )
+                                                        })} */}
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+
                                     </div>
 
                                 </div>
@@ -330,13 +454,33 @@ export default function Survey() {
                                     </div>
 
                                     <div className="col m4 s12 padtb">
-                                        <CustomSelect
-                                            onChange={handleChangeB}
-                                            options={employeeList}
-                                            Field={'emp'}
-                                            Fieldname={'emp'}
-                                            className='select-dropdown dropdown-trigger'
-                                        />
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Employee</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    name='employee'
+                                                    value={val_emp}
+                                                    // placeholder="seee"
+                                                    onChange={handleChangeA}
+                                                    label="DefaultItem"
+                                                    // onChange={(e) => setDefaultItem(e.target.value)}
+                                                    style={{ border: "0.5px solid #e7d4d4", borderRadius: "2px", padding: "5px", height: "50px" }}
+                                                >
+
+                                                    {employeeList.map((item, key) => {
+                                                        return (
+                                                            <MenuItem value={item.id} >{item.first_name} {item.last_name}</MenuItem>
+                                                        )
+                                                    })}
+
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+
+
+
                                     </div>
                                 </div>
 
@@ -347,14 +491,34 @@ export default function Survey() {
                                         <h6 >Select Feedback Frequency</h6>
                                     </div>
                                     <div className="col m4 s12 padtb">
-                                        <CustomSelect
-                                            // onChange={value => formik.setFieldValue('feed_freq', value)}
-                                            onChange={handleChangeC}
-                                            options={feed_freqList}
-                                            Field={'feed_freq'}
-                                            Fieldname={'feed_freq'}
-                                            className='select-dropdown dropdown-trigger'
-                                        />
+
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Feedback Frequency</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    name='feedback'
+                                                    value={val_feed}
+                                                    // placeholder="seee"
+                                                    onChange={handleChangeA}
+                                                    label="DefaultItem"
+                                                    // onChange={(e) => setDefaultItem(e.target.value)}
+                                                    style={{ border: "0.5px solid #e7d4d4", borderRadius: "2px", padding: "5px", height: "50px" }}
+                                                >
+
+                                                    {feed_freqList.map((item, key) => {
+                                                        return (
+                                                            <MenuItem value={item.feedback_frequency} >{FeedFreq[item.feedback_frequency - 1].feedback_frequencies} </MenuItem>
+                                                        )
+                                                    })}
+
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+
+
+
                                     </div>
                                 </div>
 
@@ -365,7 +529,34 @@ export default function Survey() {
                                         <h6 >Select Year</h6>
                                     </div>
                                     <div className="col m4 s12 padtb">
-                                        <CustomSelect
+
+
+                                        <Box sx={{ minWidth: 120 }}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Select Year</InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    name='year'
+                                                    value={val_year}
+                                                    // placeholder="seee"
+                                                    onChange={handleChangeA}
+                                                    label="DefaultItem"
+                                                    // onChange={(e) => setDefaultItem(e.target.value)}
+                                                    style={{ border: "0.5px solid #e7d4d4", borderRadius: "2px", padding: "5px", height: "50px" }}
+                                                >
+
+                                                    {feedyear.map((item, key) => {
+                                                        return (
+                                                            <MenuItem value={item.feedback_year} >{item.feedback_year} </MenuItem>
+                                                        )
+                                                    })}
+
+                                                </Select>
+                                            </FormControl>
+                                        </Box>
+
+                                        {/* <CustomSelect
                                             search={false}
                                             // onChange={value => formik.setFieldValue('year', value)}
 
@@ -376,8 +567,19 @@ export default function Survey() {
                                             Field={'emp_year'}
                                             Fieldname={'emp_year'}
                                             className='select-dropdown dropdown-trigger'
-                                        />
+                                        /> */}
 
+                                    </div>
+
+                                    <div class="input-field col m8 s8 pad-r center">
+                                        <button
+                                            class="waves-effect waves-light btn-large mb-1 mr-1"
+                                            type="submit"
+                                            name="action"
+                                            onClick={OnSubmitForm}
+                                        >
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
 

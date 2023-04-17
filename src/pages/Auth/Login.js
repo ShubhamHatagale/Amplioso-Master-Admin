@@ -82,7 +82,7 @@ export const Login = () => {
             var hash = crypto.createHash('sha512');
             var data = hash.update(values.password, 'utf-8');
             var gen_hash = data.digest('hex');
-            fetch(BaseURL
+            fetch(BaseURL 
                 , {
                     method: "post",
                     headers: {
