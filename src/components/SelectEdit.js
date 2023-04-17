@@ -108,9 +108,9 @@ export default ({ onChange, options, value, className, Field, defValue, disable,
             if (options) {
                 return (options.map(data => ({ label: data.feedback_year, value: data.id })))
             }
-        }
+        } 
 
-        if (Field === 'feed_freq') {
+        if (Field === 'feed_freq ') {
             if (options) {
                 return (options.map(data => ({ label: data.feedback_frequencies, value: data.id })))
             }
