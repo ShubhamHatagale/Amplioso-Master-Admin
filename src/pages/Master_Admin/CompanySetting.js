@@ -23,6 +23,7 @@ export default function CompanySetting() {
     };
     const years = range(1800, getYear(new Date()));
     const APIUrl = process.env.REACT_APP_Base_URL;
+    const APIMaster = process.env.REACT_APP_Base_URL_Backend;
     const token = localStorage.getItem("masters_jwt");
     const id = localStorage.getItem("masters_id");
     const [selectedUser, setSelectedUser] = useState({});
@@ -456,10 +457,10 @@ export default function CompanySetting() {
             body: formdata,
             redirect: 'follow'
         };
-        fetch(APIUrl + `/company/${id}`, requestOptions)
+        fetch(`${APIMaster}/masters/company/${id}`, requestOptions)
             .then(response => response.json())
             .then(resData => {
-                if (resData.status == 200) {
+                if (resData.status === 200) {
                     setloading(0)
                     setConfirmDialog({
                         isOpen: true,

@@ -122,7 +122,7 @@ const MasterAdminRouting = () => {
         <>
             {disableStatus === false ? (
                 <Switch>
-                    <Route exact path="/login" component={Login}>
+                    <Route exact path="/" component={Login}>
                     </Route>
                     <Route path="/forgot-password" component={ForgotPassword}>
                     </Route>
@@ -204,7 +204,7 @@ const MasterAdminRouting = () => {
                 </Switch>
             ) :
                 <Switch>
-                     <Route exact path="/login" component={Login}>
+                     <Route exact path="/" component={Login}>
                     </Route>
                     <Route path="/forgot-password" component={ForgotPassword}>
                     </Route>

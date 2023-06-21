@@ -7,8 +7,8 @@ function App() {
   // const [state, dispatch] = useReducer(reducer, initialState);
   return (
     // <UserContext.Provider value={{ state, dispatch }}>
-    // <BrowserRouter   >
-    <BrowserRouter basename={'/master_admin'} >
+    <BrowserRouter   >
+    {/* <BrowserRouter basename={'/master_admin'} > */}
       <MasterAdminRouting />
     </BrowserRouter>
     // </UserContext.Provider>

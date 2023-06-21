@@ -141,7 +141,7 @@ export default function MasterSidebar(props) {
 
         
         // dispatch({ type: "CLEAR" })
-        window.location.replace("http://dev.amplioso.com/sign_in")
+        window.location.replace("https://phpstack-988002-3467033.cloudwaysapps.com/")
         // history.push("/")
     }
     const history = useHistory()

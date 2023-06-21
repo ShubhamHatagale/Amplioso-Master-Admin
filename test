@@ -1,0 +1,39 @@
+
+function test(num){
+  for(var i=1;i<num;i++){
+    if(i%3===0){
+      console.log("Fizz")
+    }else if (i%5===0){
+      console.log("Buzz")
+    }else if(i%3===0 && i%5===0){
+      console.log("FizzBuzz")
+    }else{
+      console.log(i)
+    }
+  }
+}
+
+test(10)
+
+// 2
+function test(num){
+    var string_name="";
+    for(var i=num.length-1; i>=0; i--){
+        console.log(i)
+      string_name +=num[i]
+    }
+    
+    console.log(string_name)
+    
+  }
+  
+  test("markiV")
+
+//   OR with reverse function
+
+function test(num){
+    console.log(num.split("").reverse().join(""))
+}
+  
+  test("markiV")
+  

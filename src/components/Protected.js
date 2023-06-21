@@ -5,7 +5,7 @@ export default function Protected({ children }) {
 
     return isAuthenticated ? (
         children) : (
-        <Redirect to={{ pathname: '/login' }} />
+        <Redirect to={{ pathname: '/' }} />
     );
 }
 
