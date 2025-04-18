@@ -132,7 +132,7 @@ const MasterAdminRouting = () => {
                             data1={<MasterHeader />}
                         />
                     </ProtectedRoute>
-                
+
                     <ProtectedRoute exact path="/dash_board">
                         <MasterSidebar data={<MasterDashboard />}
                             data1={<MasterHeader />}
@@ -204,7 +204,7 @@ const MasterAdminRouting = () => {
                 </Switch>
             ) :
                 <Switch>
-                     <Route exact path="/" component={Login}>
+                    <Route exact path="/" component={Login}>
                     </Route>
                     <Route path="/forgot-password" component={ForgotPassword}>
                     </Route>
